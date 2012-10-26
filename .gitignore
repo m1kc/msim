@@ -1,11 +1,5 @@
 *.class
 
-# Package Files #
-*.jar
-*.war
-*.ear
-
 # NetBeans files #
 build/
 dist/
-
