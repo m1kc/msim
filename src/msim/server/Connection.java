@@ -14,32 +14,29 @@ import java.net.SocketTimeoutException;
 import java.util.Random;
 
 /**
- *
  * @author m1kc
  */
-public class Connection extends Thread
-{
+public class Connection extends Thread {
+
     Server parent;
-    /*SSL*/Socket s;
+    /*SSL*/
+    Socket s;
     DataInputStream dis;
     DataOutputStream dos;
     long uid = Math.abs(new Random().nextLong());
-    String account = "$temp$"+String.valueOf(uid);
+    String account = "$temp$" + String.valueOf(uid);
     boolean authorized = false;
     private boolean streamsReady = false;
 
-    public Connection(Server parent, /*SSL*/Socket s) 
-    {
+    public Connection(Server parent, /*SSL*/ Socket s) {
         this.parent = parent;
         this.s = s;
-        Log.print("Подключение с IP "+s.getInetAddress().getHostAddress()+", дан временный номер "+account);
+        Log.print("Подключение с IP " + s.getInetAddress().getHostAddress() + ", дан временный номер " + account);
     }
-    
-    public void openStreams() throws IOException
-    {
-        if (streamsReady) 
-        {
-            Log.print("Предупреждение: вызов openStreams() после открытия потоков, соединение "+uid+" ("+account+").");
+
+    public void openStreams() throws IOException {
+        if (streamsReady) {
+            Log.print("Предупреждение: вызов openStreams() после открытия потоков, соединение " + uid + " (" + account + ").");
             return;
         }
         dis = new DataInputStream(s.getInputStream());
@@ -47,55 +44,38 @@ public class Connection extends Thread
         s.setSoTimeout(120_000);
         streamsReady = true;
     }
-    
+
     @Override
-    public void run()
-    {
-        try 
-        {
-            if (!streamsReady) openStreams();
-            while(true)
-            {
+    public void run() {
+        try {
+            if (!streamsReady) {
+                openStreams();
+            }
+            while (true) {
                 Packet p = new Packet(account, dis);
                 parent.processPacket(this, p);
             }
-        }
-        catch (SocketTimeoutException ex)
-        {
-            Log.print(uid+" ("+account+") отключился по таймауту.");
-        }
-        catch (SocketException ex)
-        {
-            if (ex.getMessage().hashCode()=="Connection reset".hashCode())
-            {
-                Log.print(uid+" ("+account+") отключился.");
+        } catch (SocketTimeoutException ex) {
+            Log.print(uid + " (" + account + ") отключился по таймауту.");
+        } catch (SocketException ex) {
+            if (ex.getMessage().hashCode() == "Connection reset".hashCode()) {
+                Log.print(uid + " (" + account + ") отключился.");
+            } else {
+                Log.error("Страшная хуйня на соединении " + uid + " (" + account + ").", ex);
             }
-            else
-            {
-                Log.error("Страшная хуйня на соединении "+uid+" ("+account+").", ex);
-            }
-        }
-        catch (EOFException ex)
-        {
-            Log.print(uid+" ("+account+") отключился.");
-        }
-        catch (IOException ex) 
-        {
-            Log.error("Страшная хуйня на соединении "+uid+" ("+account+").", ex);
-        }
-        finally
-        {
+        } catch (EOFException ex) {
+            Log.print(uid + " (" + account + ") отключился.");
+        } catch (IOException ex) {
+            Log.error("Страшная хуйня на соединении " + uid + " (" + account + ").", ex);
+        } finally {
             parent.connections.remove(this);
-            
-            try
-            {
+
+            try {
                 parent.accountDisonnected(account);
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 // Да похуй уже.
             }
         }
     }
-    
+
 }

@@ -5,26 +5,21 @@
 package msim.server;
 
 /**
- *
  * @author m1kc
  */
-public class Main
-{
+public class Main {
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Log.init();
         Log.print("Взлетаем, типа.");
 
-        try
-        {
+        try {
             Log.print("Инициализация хранилища...");
             Storage.init();
-        }
-        catch (Throwable ex)
-        {
+        } catch (Throwable ex) {
             Log.error("С базой какой-то пиздец. Прерываем запуск.", ex);
             System.exit(1);
         }

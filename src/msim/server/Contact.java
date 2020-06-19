@@ -5,20 +5,17 @@
 package msim.server;
 
 /**
- *
  * @author m1kc
  */
-public class Contact 
-{
+public class Contact {
+
     String ownerAccount, id, nick, group;
 
-    public Contact(String ownerAccount, String id, String nick, String group) 
-    {
+    public Contact(String ownerAccount, String id, String nick, String group) {
         this.ownerAccount = ownerAccount;
         this.id = id;
         this.nick = nick;
         this.group = group;
     }
-    
-    
+
 }

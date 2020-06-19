@@ -6,6 +6,7 @@ import java.io.OutputStream;
 /**
  * Solkin Igor Viktorovich, TomClaw Software, 2003-2010
  * http://www.tomclaw.com/
+ *
  * @author Игорь
  */
 public class HexUtil {
@@ -36,7 +37,7 @@ public class HexUtil {
     }
 
     public static void dump_(OutputStream os, byte[] data, String linePrefix,
-            int lenToPrint) {
+                             int lenToPrint) {
         if (!isLoggerEnabled) {
             return;
         }
@@ -90,7 +91,7 @@ public class HexUtil {
     }
 
     private static void dumpChars(StringBuffer sb, byte[] data, int lineStart,
-            int maxLen) {
+                                  int maxLen) {
         int printed = lineStart;
         int printedThisLine = 0;
         sb.append("\"");
@@ -112,9 +113,10 @@ public class HexUtil {
     /**
      * Insert the method's description here.
      * Creation date: (03.12.99 11:26:13)
-     * @return java.lang.String
-     * @param str java.lang.String
+     *
+     * @param str                   java.lang.String
      * @param resultingStringLength int
+     * @return java.lang.String
      */
     private static String pad_(String str, int resultingStringLength) {
         StringBuilder buf = new StringBuilder();
@@ -129,7 +131,7 @@ public class HexUtil {
     }
 
     public static String toHexString(long n, long mask,
-            int resultingStringLength) {
+                                     int resultingStringLength) {
         return pad_(Long.toString(n & mask), resultingStringLength);
     }
 
@@ -138,7 +140,7 @@ public class HexUtil {
     }
 
     public static String toHexString0x(long n, long mask,
-            int resultingDigitStringLengthWithout0x) {
+                                       int resultingDigitStringLengthWithout0x) {
         return "0x" + toHexString(n, mask, resultingDigitStringLengthWithout0x);
     }
 

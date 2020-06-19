@@ -8,14 +8,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
- *
  * @author m1kc
  */
-public class Utils
-{
-    public static synchronized void sendPacket(Packet p, DataOutputStream dos) throws IOException
-    {
-        Log.print(">> "+p.toString());
+public class Utils {
+
+    public static synchronized void sendPacket(Packet p, DataOutputStream dos) throws IOException {
+        Log.print(">> " + p.toString());
         dos.writeUTF(p.source);
         dos.writeUTF(p.type);
         dos.writeUTF(p.content);

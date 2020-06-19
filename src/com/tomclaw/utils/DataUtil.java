@@ -8,12 +8,13 @@ import java.util.Vector;
 /**
  * Solkin Igor Viktorovich, TomClaw Software, 2003-2010
  * http://www.tomclaw.com/
+ *
  * @author Игорь
  */
 public class DataUtil {
 
     public static String codeString(String toCode) {
-        String encoded = new String();
+        StringBuilder encoded = new StringBuilder();
         String buffer;
         for (int c = 0; c < toCode.length(); c++) {
             buffer = String.valueOf((int) toCode.charAt(c));
@@ -29,9 +30,9 @@ public class DataUtil {
             if (buffer.length() == 4) {
                 buffer = "0" + buffer;
             }
-            encoded += buffer;
+            encoded.append(buffer);
         }
-        return encoded;
+        return encoded.toString();
     }
 
     public static String byteArray2stringConvertXfes(byte[] ba) {
@@ -42,7 +43,6 @@ public class DataUtil {
             byte b = ba[i];
             if (b != (byte) 0xFE) {
                 chunkLen++;
-                continue;
             } else {
                 sb.append(byteArray2string(ba, chunkStart, chunkLen));
                 i++;
@@ -98,7 +98,7 @@ public class DataUtil {
         return 2;
     }
 
-//i += put16(newrx.data, i, 0x01);
+    //i += put16(newrx.data, i, 0x01);
     public static int put32(byte[] buf, int offset, long a) {
         buf[offset] = (byte) ((a >> 24) & 0xff);
         buf[++offset] = (byte) ((a >> 16) & 0xff);
@@ -122,9 +122,7 @@ public class DataUtil {
     }
 
     public static void putArray(byte[] buf, int offset, byte[] array) {
-        for (int c = offset; c < array.length + offset; c++) {
-            buf[c] = array[(c - offset)];
-        }
+        System.arraycopy(array, 0, buf, offset, array.length + offset - offset);
     }
 
     public static byte[] mmputil_prepareBytesFromLongReversed(long num) {
@@ -163,9 +161,9 @@ public class DataUtil {
         return revNum;
     }
 
-    public static int aim_puttlv_str_(byte buf[], final int offset,
-            int tlv_type,
-            byte[] stringAsByteArray) {
+    public static int aim_puttlv_str_(byte[] buf, final int offset,
+                                      int tlv_type,
+                                      byte[] stringAsByteArray) {
         int delta = 0;
         delta += put16(buf, offset + delta, tlv_type);
         delta += put16(buf, offset + delta, stringAsByteArray.length);
@@ -182,9 +180,9 @@ public class DataUtil {
     public static int get8int(byte[] buf, int offset) {
         return ((buf[offset])) & 0xff;
     }
-    
+
     public static byte get8(byte[] buf, int offset) {
-        return (byte)(((buf[offset])) & 0xff);
+        return (byte) (((buf[offset])) & 0xff);
     }
 
     /*public static int get8(byte[] buf, int offset) {
@@ -264,7 +262,7 @@ public class DataUtil {
         return (value);
     }
 
-    public static String getMetaString(int offset, byte data[]) {
+    public static String getMetaString(int offset, byte[] data) {
         String metaString;
         int length = get16_reversed(data, offset);
         metaString = new String(data).substring(offset + 2, offset + 2 + length - 1);
@@ -284,8 +282,8 @@ public class DataUtil {
         String[] strings = explode(text, separator);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         String item;
-        for (int i = 0; i < strings.length; i++) {
-            item = strings[i];
+        for (String string : strings) {
+            item = string;
             if (item.charAt(0) == '*') {
                 for (int j = 1; j < item.length(); j++) {
                     bytes.write((byte) item.charAt(j));
@@ -313,7 +311,6 @@ public class DataUtil {
             }
         }
         tmp.add(strBuf.toString());
-        String[] result = (String[]) tmp.toArray();
-        return result;
+        return (String[]) tmp.toArray();
     }
 }
