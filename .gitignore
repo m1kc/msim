@@ -1,5 +1,7 @@
 *.class
 
+msim-server.sqlite
+
 # NetBeans files #
 build/
 dist/

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 /**
  * Solkin Igor Viktorovich, TomClaw Software, 2003-2010
  * http://www.tomclaw.com/
+ *
  * @author Игорь
  */
 public class TransUtil {
@@ -25,8 +26,7 @@ public class TransUtil {
         String[] strings = explode(text, serparator);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
-        for (int i = 0; i < strings.length; i++) {
-            String item = strings[i];
+        for (String item : strings) {
             if (item.charAt(0) == '*') {
                 for (int j = 1; j < item.length(); j++) {
                     bytes.write((byte) item.charAt(j));
@@ -37,13 +37,13 @@ public class TransUtil {
         }
         return bytes.toByteArray();
     }
-    
-    static public byte[] explodeToBytes(String text) {
-        byte[] bytes = new byte[text.length()/2];
 
-        for(int c=0;c<bytes.length;c++){
+    static public byte[] explodeToBytes(String text) {
+        byte[] bytes = new byte[text.length() / 2];
+
+        for (int c = 0; c < bytes.length; c++) {
             // Logger.outMessage(text.substring(c*2, (c+1)*2));
-            bytes[c] = (byte)Integer.parseInt(text.substring(c*2, (c+1)*2), 16);
+            bytes[c] = (byte) Integer.parseInt(text.substring(c * 2, (c + 1) * 2), 16);
         }
         return bytes;
     }
@@ -62,15 +62,14 @@ public class TransUtil {
             }
         }
         tmp.add(strBuf.toString());
-        String[] result = (String[]) tmp.toArray();
-        return result;
+        return (String[]) tmp.toArray();
     }
 
     public static String concatToBytes(byte[] array, String separator, int radix) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int c = 0; c < array.length; c++) {
-            result += Integer.toString(array[c], radix) + ((c < array.length - 1) ? separator : "");
+            result.append(Integer.toString(array[c], radix)).append((c < array.length - 1) ? separator : "");
         }
-        return result;
+        return result.toString();
     }
 }
