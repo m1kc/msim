@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package msim.server;
 
 import java.io.DataInputStream;
@@ -24,7 +20,7 @@ public class Connection extends Thread {
     DataInputStream dis;
     DataOutputStream dos;
     long uid = Math.abs(new Random().nextLong());
-    String account = "$temp$" + String.valueOf(uid);
+    String account = "$temp$" + uid;
     boolean authorized = false;
     private boolean streamsReady = false;
 

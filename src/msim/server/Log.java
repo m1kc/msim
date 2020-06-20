@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package msim.server;
 
 /**
@@ -21,13 +17,13 @@ public class Log {
 
     private static String time() {
         long time = System.currentTimeMillis() - start;
-        String seconds = String.valueOf(time / 1000);
+        StringBuilder seconds = new StringBuilder(String.valueOf(time / 1000));
         while (seconds.length() < 10) {
-            seconds = ' ' + seconds;
+            seconds.insert(0, ' ');
         }
-        String milliseconds = String.valueOf(time % 1000);
+        StringBuilder milliseconds = new StringBuilder(String.valueOf(time % 1000));
         while (milliseconds.length() < 3) {
-            milliseconds = '0' + milliseconds;
+            milliseconds.insert(0, '0');
         }
         return seconds + "s " + milliseconds + "ms";
     }

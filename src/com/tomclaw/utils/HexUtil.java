@@ -44,7 +44,7 @@ public class HexUtil {
         int length = data.length;
         StringBuffer sb = new StringBuffer();
         try {
-            sb.append(("\r\n" + linePrefix));
+            sb.append("\r\n").append(linePrefix);
             int printed = 0;
             int printedThisLine = 0;
             int lineStart = 0;
@@ -60,7 +60,7 @@ public class HexUtil {
                 if (((printedThisLine & 3) == 0) && (printedThisLine > 0)) {
                     sb.append("  ");
                 }
-                sb.append(((printed >= lenToPrint ? "  " : pad_(Integer.toHexString(data[printed] & 0xff), 2)).toLowerCase() + " "));
+                sb.append((printed >= lenToPrint ? "  " : pad_(Integer.toHexString(data[printed] & 0xff), 2)).toLowerCase()).append(" ");
                 printed++;
                 printedThisLine++;
                 if (printed < lenToPrint) {
@@ -145,11 +145,11 @@ public class HexUtil {
     }
 
     public static String bytesToString(byte[] data) {
-        String string = new String();
-        for (int c = 0; c < data.length; c++) {
-            string += pad_(Integer.toHexString(data[c] & 0xff), 2);
+        StringBuilder string = new StringBuilder();
+        for (byte datum : data) {
+            string.append(pad_(Integer.toHexString(datum & 0xff), 2));
         }
-        return string;
+        return string.toString();
     }
 
     public static byte[] stringToBytes(String string) {

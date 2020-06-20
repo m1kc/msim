@@ -8,7 +8,7 @@ To build it, type:
 
     ant jar
     
-JDK 7 is strongly required.
+JDK 8 is required.
 
 To run:
 

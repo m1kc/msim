@@ -23,7 +23,7 @@ public class BinGear {
         if (groupName == null) {
             throw new IncorrectValueException("nulltype is not allowed here as patameter");
         }
-        hashtable.put(groupName, new HashMap<String, String>());
+        hashtable.put(groupName, new HashMap<>());
     }
 
     public void addItem(String groupName, String itemName, String value) throws GroupNotFoundException, IncorrectValueException {
