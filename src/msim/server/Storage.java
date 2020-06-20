@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package msim.server;
 
 import java.io.File;
@@ -21,8 +17,8 @@ public class Storage {
     private static final String filename = "msim-server.sqlite";
     private static SqlJetDb database;
     private static ISqlJetTable accountsTable, contactsTable;
-    private static Map<String, String> accounts = Collections.synchronizedMap(new HashMap<String, String>());
-    private static List<Contact> contacts = Collections.synchronizedList(new LinkedList<Contact>());
+    private static final Map<String, String> accounts = Collections.synchronizedMap(new HashMap<>());
+    private static final List<Contact> contacts = Collections.synchronizedList(new LinkedList<>());
 
     public static void init() throws SqlJetException {
         Log.print("Открываем файл с базой данных...");
